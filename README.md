@@ -49,7 +49,7 @@ Edit crontab.
 crontab -e
 ```
 
-Then paste in the following line:
+Then paste in the following line which will refresh your SSL certificates every month:
 ```
 0 1 1 * *   bash /home/xray/certs/xray-cert-renew.sh
 ```
