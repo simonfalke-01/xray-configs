@@ -2,6 +2,8 @@
 My xray configuration files.
 
 # Server configuration
+Install `acme.sh` and `nginx`. Relevant guides can be found online.
+
 Create folders `certs` and `logs` under `/home/xray`.
 ```zsh
 mkdir certs logs
