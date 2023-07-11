@@ -1,0 +1,225 @@
+{
+    "log": {
+        "loglevel": "info",
+        "access": "/home/xray/logs/access.log",
+        "error": "/home/xray/logs/error.log"
+    },
+    "dns": {
+        "servers": [
+            "localhost"
+        ]
+    },
+    "routing": {
+        "domainStrategy": "IPIfNonMatch",
+        "rules": [
+            {
+                "type": "field",
+                "ip": [
+                    "geoip:private"
+                ],
+                "outboundTag": "block"
+            },
+            {
+                "type": "field",
+                "ip": [
+                    "geoip:cn"
+                ],
+                "outboundTag": "block"
+            },
+            {
+                "type": "field",
+                "domain": [
+                    "geosite:category-ads-all"
+                ],
+                "outboundTag": "block"
+            }
+        ]
+    },
+    "inbounds": [
+        {
+            "tag": "socks-in",
+            "protocol": "socks",
+            // Tailscale IP, so that when the client is also connected to the Tailnet, proxy can be accessed through Tailscale
+            "listen": "<tailscale ip>",
+            "port": 10800,
+            "settings": {
+                "udp": true
+            },
+            "sniffing": {
+                "enabled": true
+            }
+        },
+        {
+            "tag": "http-in",
+            "protocol": "http",
+            // Tailscale IP, so that when the client is also connected to the Tailnet, proxy can be accessed through Tailscale
+            "listen": "<tailscale ip>",
+            "port": 10801
+        },
+        {
+            "port": 443,
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        // Replace with UUID
+                        "id": "<uuid>",
+                        "flow": "xtls-rprx-vision",
+                        "level": 0,
+                        "email": "ziqibrandonli@gmail.com"
+                    }
+                ],
+                "decryption": "none",
+                "fallbacks": [
+                    {
+                        "dest": 9001,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/ws",
+                        "dest": 9002,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/vmesstcp",
+                        "dest": 9003,
+                        "xver": 1
+                    },
+                    {
+                        "path": "/vmessws",
+                        "dest": 9004,
+                        "xver": 1
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "tls",
+                "tlsSettings": {
+                    "alpn": [
+                        "http/1.1"
+                    ],
+                    "certificates": [
+                        {
+                            "certificateFile": "/home/xray/certs/fullchain.crt",
+                            "keyFile": "/home/xray/certs/xray.key"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "port": 9001,
+            "listen": "127.0.0.1",
+            "protocol": "trojan",
+            "settings": {
+                "clients": [
+                    {
+                        // Replace with trojan password, randomly generate one
+                        "password": "<trojan passwd>",
+                        "level": 0,
+                        "email": "ziqibrandonli@gmail.com"
+                    }
+                ],
+                "fallbacks": [
+                    {
+                        "dest": 9005
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "none",
+                "tcpSettings": {
+                    "acceptProxyProtocol": true
+                }
+            }
+        },
+        {
+            "port": 9002,
+            "listen": "127.0.0.1",
+            "protocol": "vless",
+            "settings": {
+                "clients": [
+                    {
+                        // Replace with UUID
+                        "id": "<uuid>",
+                        "level": 0,
+                        "email": "ziqibrandonli@gmail.com"
+                    }
+                ],
+                "decryption": "none"
+            },
+            "streamSettings": {
+                "network": "ws",
+                "security": "none",
+                "wsSettings": {
+                    "acceptProxyProtocol": true,
+                    "path": "/ws"
+                }
+            }
+        },
+        {
+            "port": 9003,
+            "listen": "127.0.0.1",
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        // Replace with UUID
+                        "id": "<uuid>",
+                        "level": 0,
+                        "email": "ziqibrandonli@gmail.com"
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "tcp",
+                "security": "none",
+                "tcpSettings": {
+                    "acceptProxyProtocol": true,
+                    "header": {
+                        "type": "http",
+                        "request": {
+                            "path": [
+                                "/vmesstcp"
+                            ]
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "port": 9004,
+            "listen": "127.0.0.1",
+            "protocol": "vmess",
+            "settings": {
+                "clients": [
+                    {
+                        // Replace with UUID
+                        "id": "<uuid>",
+                        "level": 0,
+                        "email": "ziqibrandonli@gmail.com"
+                    }
+                ]
+            },
+            "streamSettings": {
+                "network": "ws",
+                "security": "none",
+                "wsSettings": {
+                    "path": "/vmessws"
+                }
+            }
+        }
+    ],
+    "outbounds": [
+        {
+            "tag": "direct",
+            "protocol": "freedom"
+        },
+        {
+            "tag": "block",
+            "protocol": "blackhole"
+        }
+    ]
+}
