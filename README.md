@@ -2,7 +2,7 @@
 My xray configuration files.
 
 # Server configuration
-This guide assumes you are using Ubuntu 22.10.
+This guide assumes you are using Ubuntu 22.10.<br/>
 Install `acme.sh`, `nginx`, and `tailscale`. Relevant guides can be found online.
 
 Create folders `certs` and `logs` under `/home/xray`.
