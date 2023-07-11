@@ -97,7 +97,7 @@
             "port": 443,
             "users": [
               {
-                # Replace with UUID
+                // Replace with UUID
                 "id": "<uuid>",
                 "flow": "xtls-rprx-vision",
                 "encryption": "none",
@@ -111,7 +111,7 @@
         "network": "tcp",
         "security": "tls",
         "tlsSettings": {
-          # Replace with xray host domain name
+          // Replace with xray host domain name
           "serverName": "<xray host>",
           "allowInsecure": false,
           "fingerprint": "safari"
