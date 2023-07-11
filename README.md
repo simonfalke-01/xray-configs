@@ -23,18 +23,18 @@ server {
 
         server_name ws.example.com vl.example.com tsc.example.com;
 
-	      return 301 https://$http_host$request_uri;
+	return 301 https://$http_host$request_uri;
 }
 
 server {
-   	    listen 9005;
-	      listen [::]:9005;
+	listen 9005;
+	listen [::]:9005;
 
         server_name ws.example.com vl.example.com tsc.example.com;
 
-	      root /var/www/html;
-   	    index index.html;
-   	    add_header Strict-Transport-Security "max-age=63072000" always;
+	root /var/www/html;
+	index index.html;
+	add_header Strict-Transport-Security "max-age=63072000" always;
 }
 ```
 
