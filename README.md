@@ -79,3 +79,8 @@ Then paste in the following line which will refresh your SSL certificates every 
 ```
 0 1 1 * *   bash /home/xray/certs/xray-cert-renew.sh
 ```
+
+Now, the final step is to start `nginx` and `xray`.
+```zsh
+systemctl start nginx && systemctl start xray
+```
