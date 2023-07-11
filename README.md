@@ -10,7 +10,7 @@ mkdir certs logs
 ```
 
 Under `/var/www/html` prepare an `index.html` to use as decoy. It can be any static page of your choice.
-```
+```zsh
 echo "Testing webpage" > /var/www/html/index.html
 ```
 
@@ -37,4 +37,19 @@ echo "Read Permission Granted for Private Key"
 
 sudo systemctl restart xray
 echo "Xray Restarted"
+```
+
+Switch to user `xray`.
+```zsh
+su xray
+```
+
+Edit crontab.
+```zsh
+crontab -e
+```
+
+Then paste in the following line:
+```
+0 1 1 * *   bash /home/xray/certs/xray-cert-renew.sh
 ```
