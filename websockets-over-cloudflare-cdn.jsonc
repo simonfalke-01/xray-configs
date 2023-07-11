@@ -22,7 +22,7 @@
         "address": "114.114.114.114",
         "domains": ["geosite:cn"]
       },
-      # Fallback to localhost
+      // Fallback to localhost
       "localhost"
     ]
   },
