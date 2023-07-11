@@ -7,22 +7,22 @@
   "dns": {
     "servers": [
       {
-        # Replace with DNS IP
+        // Replace with DNS IP
         "address": "<dns name for none cn ips>",
         "domains": ["geosite:geolocation-!cn"]
       },
       {
-        # DNS for IPs from CN
+        // DNS for IPs from CN
         "address": "223.5.5.5",
         "domains": ["geosite:cn"],
         "expectIPs": ["geoip:cn"]
       },
       {
-        # DNS for IPs from CN
+        // DNS for IPs from CN
         "address": "114.114.114.114",
         "domains": ["geosite:cn"]
       },
-      # Fallback to localhost
+      // Fallback to localhost
       "localhost"
     ]
   },
@@ -32,7 +32,7 @@
     "rules": [
       {
         "type": "field",
-        # Replace with same DNS IP for previous entry
+        // Replace with same DNS IP for previous entry
         "ip": ["<dns name for none cn ips>"],
         "outboundTag": "proxy"
       },
@@ -92,7 +92,7 @@
       "settings": {
         "vnext": [
           {
-            # Replace with xray host domain name
+            // Replace with xray host domain name
             "address": "<xray host>",
             "port": 443,
             "users": [
