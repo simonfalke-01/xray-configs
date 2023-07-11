@@ -63,6 +63,8 @@ sudo systemctl restart xray
 echo "Xray Restarted"
 ```
 
+Put `server-config.json` as `config.json` under `/usr/local/etc/xray`. Modify fields accordingly.
+
 Switch to user `xray`.
 ```zsh
 su xray
