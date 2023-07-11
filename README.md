@@ -15,6 +15,29 @@ Under `/var/www/html` prepare an `index.html` to use as decoy. It can be any sta
 echo "Testing webpage" > /var/www/html/index.html
 ```
 
+Add an `xray.conf` under `/etc/nginx/conf.d`.
+```
+server {
+        listen 80;
+        listen [::]:80;
+
+        server_name ws.example.com vl.example.com tsc.example.com;
+
+	      return 301 https://$http_host$request_uri;
+}
+
+server {
+   	    listen 9005;
+	      listen [::]:9005;
+
+        server_name ws.example.com vl.example.com tsc.example.com;
+
+	      root /var/www/html;
+   	    index index.html;
+   	    add_header Strict-Transport-Security "max-age=63072000" always;
+}
+```
+
 Set `CF_Token` environment variable.
 ```zsh
 export CF_Token="my_cf_token"
