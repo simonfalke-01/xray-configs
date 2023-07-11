@@ -84,3 +84,13 @@ Now, the final step is to start `nginx` and `xray`.
 ```zsh
 systemctl start nginx && systemctl start xray
 ```
+
+# Client Configuration
+Use `vless-over-tls.jsonc` or `websockets-over-cloudflare-cdn.jsonc` depending on your choice and save them as `config.json`. Modify the fields accordingly.
+
+Then, run `xray`.
+```zsh
+xray run
+```
+
+Finally, change your system proxy to `socks5://localhost:10800`.
