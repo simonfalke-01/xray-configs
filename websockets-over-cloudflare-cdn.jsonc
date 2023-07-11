@@ -110,7 +110,7 @@
         "network": "ws",
         "security": "tls",
         "tlsSettings": {
-          # Replace with xray host domain name
+          // Replace with xray host domain name
           "serverName": "<xray host>",
           "allowInsecure": false,
           "fingerprint": "safari"
