@@ -1,0 +1,132 @@
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "info"
+  },
+  "dns": {
+    "servers": [
+      {
+        # Replace with DNS IP
+        "address": "<dns name for none cn ips>",
+        "domains": ["geosite:geolocation-!cn"]
+      },
+      {
+        # DNS for IPs from CN
+        "address": "223.5.5.5",
+        "domains": ["geosite:cn"],
+        "expectIPs": ["geoip:cn"]
+      },
+      {
+        # DNS for IPs from CN
+        "address": "114.114.114.114",
+        "domains": ["geosite:cn"]
+      },
+      # Fallback to localhost
+      "localhost"
+    ]
+  },
+
+  "routing": {
+    "domainStrategy": "IPIfNonMatch",
+    "rules": [
+      {
+        "type": "field",
+        # Replace with same DNS IP for previous entry
+        "ip": ["<dns name for none cn ips>"],
+        "outboundTag": "proxy"
+      },
+      {
+        "type": "field",
+        "domain": ["geosite:category-ads-all"],
+        "outboundTag": "block"
+      },
+      {
+        "type": "field",
+        "domain": ["geosite:cn"],
+        "outboundTag": "direct"
+      },
+      {
+        "type": "field",
+        "ip": ["geoip:cn", "geoip:private"],
+        "outboundTag": "direct"
+      },
+      {
+        "type": "field",
+        "domain": ["geosite:geolocation-!cn"],
+        "outboundTag": "proxy"
+      },
+      {
+        "type": "field",
+        "ip": ["223.5.5.5"],
+        "outboundTag": "direct"
+      }
+    ]
+  },
+
+  "inbounds": [
+    {
+      "tag": "socks-in",
+      "protocol": "socks",
+      "listen": "127.0.0.1",
+      "port": 10800,
+      "settings": {
+        "udp": true
+      },
+      "sniffing": {
+        "enabled": true
+      }
+    },
+    {
+      "tag": "http-in",
+      "protocol": "http",
+      "listen": "127.0.0.1",
+      "port": 10801
+    }
+  ],
+
+  "outbounds": [
+    {
+      "tag": "proxy",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            # Replace with xray host domain name
+            "address": "<xray host>",
+            "port": 443,
+            "users": [
+              {
+                # Replace with UUID
+                "id": "<uuid>",
+                "encryption": "none",
+                "level": 0
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "security": "tls",
+        "tlsSettings": {
+          # Replace with xray host domain name
+          "serverName": "<xray host>",
+          "allowInsecure": false,
+          "fingerprint": "safari"
+        },
+        "wsSettings": {
+          "path": "/ws"
+        }
+      }
+    },
+    {
+      "tag": "direct",
+      "protocol": "freedom"
+    },
+    {
+      "tag": "block",
+      "protocol": "blackhole"
+    }
+  ]
+}
