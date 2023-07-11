@@ -2,9 +2,9 @@
 My xray configuration files.
 
 # Server configuration
-Create folders `certs`, `logs`, and `www` under `/home/xray`
+Create folders `certs` and `logs` under `/home/xray`
 ```zsh
-mkdir certs logs www
+mkdir certs logs
 ```
 
 Set `CF_Token` environment variable
