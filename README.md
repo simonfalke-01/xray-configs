@@ -1,6 +1,7 @@
 # xray-configs
 My xray configuration files.<br/>
-xray is the next generation of v2ray, which has been increasingly stagnant in development.
+xray is a proxy software primarily used to bypass firewalls and restrictions. Learn more about it [here](https://github.com/XTLS/Xray-core).
+It is the next generation of v2ray, which has been increasingly stagnant in development.
 
 ## Requirements
 - A domain
