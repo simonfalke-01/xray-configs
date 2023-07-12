@@ -8,9 +8,12 @@ xray is the next generation of v2ray, which has been increasingly stagnant in de
 - Cloudflare
 
 You need to setup the following subdomains:
-- `vl`
-- `ws`
-- `tsc` (If you do not wish to setup Tailscale, ignore this subdomain)
+- `vl` (vless) (disable Cloudflare CDN, aka the yellow toggle next to your subdomain)
+- `ws` (websocket) (enable Cloudflare CDN, aka the yellow toggle next to your subdomain)
+- `tsc` (tailscale) (If you do not wish to setup Tailscale, ignore this subdomain)
+
+Do note that you *have* to disable Cloudflare CDN for `vl` (vless). Cloudflare *cannot* proxy `tcp` traffic.<br/>
+Cloudflare CDN for `ws` (websocket) is optional.
 
 # Server configuration
 This guide assumes you are using Ubuntu 22.10.<br/>
