@@ -1,9 +1,21 @@
 # xray-configs
-My xray configuration files.
+My xray configuration files.<br/>
+xray is the next generation of v2ray, which has been increasingly stagnant in development.
+
+## Requirements
+- A domain
+- A server
+- Cloudflare
+
+You need to setup the following subdomains:
+- `vl`
+- `ws`
+- `tsc` (If you do not wish to setup Tailscale, ignore this subdomain)
 
 # Server configuration
 This guide assumes you are using Ubuntu 22.10.<br/>
-Install `acme.sh`, `nginx`, and `tailscale`. Relevant guides can be found online.
+Install `acme.sh`, `nginx`, and Tailscale. Relevant guides can be found online.<br/>
+Tailscale is optional.
 
 Create folders `certs` and `logs` under `/home/xray`.
 ```zsh
@@ -15,7 +27,7 @@ Under `/var/www/html` prepare an `index.html` to use as decoy. It can be any sta
 echo "Testing webpage" > /var/www/html/index.html
 ```
 
-Add an `xray.conf` under `/etc/nginx/conf.d`.
+Add an `xray.conf` under `/etc/nginx/conf.d`. If you would not like to setup tailscale, remove `tsc.example.com` from your config. Replace `example.com` with your own domain.
 ```
 server {
         listen 80;
