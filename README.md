@@ -21,6 +21,8 @@ This guide assumes you are using Ubuntu 22.10.<br/>
 Install `acme.sh`, `nginx`, and Tailscale. Relevant guides can be found online.<br/>
 Tailscale is optional.
 
+Run all of the following commands as the user `root` unless specified otherwise.
+
 Create folders `certs` and `logs` under `/home/xray`.
 ```zsh
 mkdir certs logs
@@ -99,7 +101,7 @@ Then paste in the following line which will refresh your SSL certificates every 
 
 Now, the final step is to start `nginx` and `xray`.
 ```zsh
-systemctl start nginx && systemctl start xray
+sudo systemctl start nginx && sudo systemctl start xray
 ```
 
 # Client Configuration
